@@ -43,5 +43,34 @@ def criar_tarefas():
 
     return jsonify(nova_tarefa.to_dict()), 201
 
+#metodo PUT
+@app.route('/tarefas/<int:id>',methods=['PUT'])
+def atualizar_tarefas(id):
+    tarefa = Tarefa.query.get_or_404(id, description="Tarefa não encontrada!")
+    dados = request.get_json()
+
+    if 'titulo' in dados:
+        tarefa.titulo = dados['titulo']
+    if 'descricao' in dados:
+        tarefa.descricao = dados['descricao']
+    if 'concluida' in dados:
+        tarefa.concluida = dados['concluida']
+
+    db.session.commit()
+    return jsonify(tarefa.to_dict()), 200
+
+
+#metodo DELETE
+
+@app.route('/tarefas/<int:id>',methods=['DELETE'])
+def remover_tarefa(id):
+    tarefa = Tarefa.query.get_or_404(id, description="Tarefa não encontrada!")
+
+    db.session.delete(tarefa)
+    db.session.commit()
+
+    return jsonify({'mensagem': f'Tarefa {id} deletada com sucesso!'}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
