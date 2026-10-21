@@ -1,12 +1,21 @@
-# 📝 Task Manager API (Flask & SQLAlchemy)
+# 📝 Task Manager (API Flask + Streamlit Frontend)
 
 
 
-Uma API RESTful simples e eficiente para gestão de tarefas (*To-Do List*), desenvolvida em Python com a utilização do *framework* **Flask** e **SQLAlchemy** para persistência de dados num banco **SQLite**.
+Uma aplicação Full Stack completa para gestão de tarefas (*To-Do List*), desenvolvida em Python. O projeto conta com uma **API RESTful** construída com **Flask** e **SQLAlchemy** (banco de dados SQLite) e uma interface web moderna e interativa criada com **Streamlit**.
 
 
 
-Este projeto foi construído seguindo boas práticas de arquitetura modular, organização de código e controlo de versões com **Git** (utilizando o padrão de *feature branches*).
+---
+
+
+
+## 🎨 Interface da Aplicação
+
+
+
+<img width="1798" height="959" alt="Captura de tela de 2026-10-20 23-49-43" src="https://github.com/user-attachments/assets/d047609f-bbf9-4713-b94f-8136377532f2" />
+
 
 
 
@@ -18,13 +27,13 @@ Este projeto foi construído seguindo boas práticas de arquitetura modular, org
 
 
 
-- **Listar Tarefas (`GET /tarefas`)**: Obtém todas as tarefas registadas na base de dados.
+- **Listar Tarefas (`GET`)**: Exibe todas as tarefas cadastradas no banco de dados SQLite com seus respectivos status (Pendente / Concluída).
 
-- **Criar Tarefa (`POST /tarefas`)**: Regista uma nova tarefa (campo `titulo` obrigatório).
+- **Criar Tarefa (`POST`)**: Adiciona novas tarefas através de um formulário com campos de título (obrigatório) e descrição.
 
-- **Atualizar Tarefa (`PUT /tarefas/<id>`)**: Modifica o título, a descrição ou o estado de conclusão de uma tarefa existente.
+- **Atualizar Status (`PUT`)**: Alterna rapidamente o estado da tarefa entre concluída e pendente com um clique.
 
-- **Remover Tarefa (`DELETE /tarefas/<id>`)**: Elimina uma tarefa da base de dados através do seu ID.
+- **Remover Tarefa (`DELETE`)**: Exclui permanentemente tarefas do banco de dados.
 
 
 
@@ -36,17 +45,31 @@ Este projeto foi construído seguindo boas práticas de arquitetura modular, org
 
 
 
+### Backend (API RESTful)
+
 - **Python 3**
 
-- **Flask**: *Framework* web para construção da API REST.
+- **Flask**: Framework para estruturação das rotas HTTP.
 
-- **Flask-SQLAlchemy**: ORM para abstração e gestão da base de dados.
+- **Flask-SQLAlchemy**: ORM para abstração e persistência na base de dados.
 
-- **SQLite**: Banco de dados relacional em ficheiro.
+- **SQLite**: Banco de dados relacional em arquivo local (`todo.db`).
 
-- **Git & GitHub**: Controlo de versões e alojamento do código.
 
-- **Postman**: Ferramenta para testes de endpoints HTTP.
+
+### Frontend (Interface Web)
+
+- **Streamlit**: Framework Python para construção de interfaces web reativas sem necessidade de HTML/CSS/JS.
+
+- **Requests**: Biblioteca para consumo e comunicação de dados HTTP entre a interface e a API Flask.
+
+
+
+### Versionamento & Ferramentas
+
+- **Git & GitHub**: Versionamento estruturado em *feature branches*.
+
+- **Postman**: Validação dos endpoints HTTP.
 
 
 
@@ -64,17 +87,21 @@ projeto-api-github/
 
 ├── instance/
 
-│   └── todo.db          # Ficheiro do banco de dados SQLite (gerado automaticamente)
+│   └── todo.db          # Banco de dados SQLite (gerado automaticamente)
 
-├── app.py               # Rotas da aplicação e inicialização do servidor
+├── app.py               # Servidor Backend (API Flask)
+
+├── frontend.py          # Interface Web (Streamlit)
 
 ├── database.py          # Instância centralizada do SQLAlchemy
 
-├── models.py            # Definição do modelo de dados (Tabela Tarefa)
+├── models.py            # Modelo de dados da tabela Tarefa
 
-├── .gitignore           # Ficheiros ignorados pelo Git (ex: .venv, __pycache__)
+├── .gitignore           # Arquivos ignorados pelo Git (.venv, __pycache__, *.db)
 
-└── README.md            # Documentação do projeto
+├── README.md            # Documentação do projeto
+
+└── Captura de tela de 2026-10-20 23-49-43.png  # Imagem da interface
 
 ```
 
@@ -96,63 +123,63 @@ projeto-api-github/
 
 
 
-### Passo a Passo
+### 1. Clonar o repositório e preparar o ambiente
+
+```bash
+
+git clone https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git
+
+cd SEU-REPOSITORIO
 
 
 
-1. **Clonar o repositório:**
+# Criar e ativar o ambiente virtual (.venv)
 
-   ```bash
+python3 -m venv .venv
 
-   git clone https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git
-
-   cd SEU-REPOSITORIO
-
-   ```
+source .venv/bin/activate  # No Windows: .venv\Scripts\activate
 
 
 
-2. **Criar e ativar o ambiente virtual (`.venv`):**
+# Instalar dependências
 
-   ```bash
+pip install flask flask-sqlalchemy streamlit requests
 
-   # No Linux / macOS:
-
-   python3 -m venv .venv
-
-   source .venv/bin/activate
+```
 
 
 
-   # No Windows:
-
-   python -m venv .venv
-
-   .venv\Scripts\activate
-
-   ```
+### 2. Executar a Aplicação (2 Terminais)
 
 
 
-3. **Instalar as dependências:**
-
-   ```bash
-
-   pip install flask flask-sqlalchemy
-
-   ```
+Para rodar o sistema completo, é necessário manter a API (Backend) e a Interface (Frontend) executando simultaneamente em terminais separados:
 
 
 
-4. **Executar a aplicação:**
+* **Terminal 1 — Backend (API Flask):**
 
-   ```bash
+  ```bash
 
-   python app.py
+  python app.py
 
-   ```
+  ```
 
-   A API ficará disponível em: `http://127.0.0.1:5001/`
+  *A API estará ativa em: `http://127.0.0.1:5001/`*
+
+
+
+* **Terminal 2 — Frontend (Streamlit):**
+
+  ```bash
+
+  source .venv/bin/activate
+
+  streamlit run frontend.py
+
+  ```
+
+  *A interface abrirá automaticamente no navegador em: `http://localhost:8501`*
 
 
 
@@ -160,135 +187,21 @@ projeto-api-github/
 
 
 
-## 📌 Documentação dos Endpoints
+## 📌 Documentação da API (Endpoints REST)
 
 
 
-### 1. Listar todas as tarefas
+| Método | Endpoint | Descrição |
 
-- **Método:** `GET`
+| :--- | :--- | :--- |
 
-- **URL:** `/tarefas`
+| `GET` | `/tarefas` | Retorna a lista de todas as tarefas em formato JSON. |
 
-- **Resposta (`200 OK`):**
+| `POST` | `/tarefas` | Cria uma nova tarefa. Requer JSON: `{"titulo": "..."}`. |
 
-  ```json
+| `PUT` | `/tarefas/<id>` | Atualiza dados/status da tarefa pelo ID. |
 
-  [
-
-    {
-
-      "id": 1,
-
-      "titulo": "Estudar Flask",
-
-      "descricao": "Praticar rotas e SQLAlchemy",
-
-      "concluida": false
-
-    }
-
-  ]
-
-  ```
-
-
-
-### 2. Criar uma nova tarefa
-
-- **Método:** `POST`
-
-- **URL:** `/tarefas`
-
-- **Corpo da Requisição (JSON):**
-
-  ```json
-
-  {
-
-    "titulo": "Comprar leite",
-
-    "descricao": "Marca desnatada"
-
-  }
-
-  ```
-
-- **Resposta (`201 Created`):**
-
-  ```json
-
-  {
-
-    "id": 2,
-
-    "titulo": "Comprar leite",
-
-    "descricao": "Marca desnatada",
-
-    "concluida": false
-
-  }
-
-  ```
-
-
-
-### 3. Atualizar uma tarefa
-
-- **Método:** `PUT`
-
-- **URL:** `/tarefas/<id>`
-
-- **Corpo da Requisição (JSON):**
-
-  ```json
-
-  {
-
-    "concluida": true
-
-  }
-
-  ```
-
-- **Resposta (`200 OK`):**
-
-  ```json
-
-  {
-
-    "id": 2,
-
-    "titulo": "Comprar leite",
-
-    "descricao": "Marca desnatada",
-
-    "concluida": true
-
-  }
-
-  ```
-
-
-
-### 4. Remover uma tarefa
-
-- **Método:** `DELETE`
-
-- **URL:** `/tarefas/<id>`
-
-- **Resposta (`200 OK`):**
-
-  ```json
-
-  {
-
-    "mensagem": "Tarefa 2 deletada com sucesso!"
-
-  }
-
-  ```
+| `DELETE` | `/tarefas/<id>` | Remove a tarefa do banco de dados pelo ID. |
 
 
 
@@ -300,4 +213,4 @@ projeto-api-github/
 
 
 
-Desenvolvido por **Gabriel** durante o aprendizado prático de construção de APIs RESTful com Python e Flask.
+Desenvolvido por **Gabriel** durante a construção prática de uma aplicação Full Stack em Python.
