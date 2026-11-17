@@ -202,15 +202,3 @@ Para rodar o sistema completo, é necessário manter a API (Backend) e a Interfa
 | `PUT` | `/tarefas/<id>` | Atualiza dados/status da tarefa pelo ID. |
 
 | `DELETE` | `/tarefas/<id>` | Remove a tarefa do banco de dados pelo ID. |
-
-
-
----
-
-
-
-## ✒️ Autor
-
-
-
-Desenvolvido por **Gabriel** durante a construção prática de uma aplicação Full Stack em Python.
